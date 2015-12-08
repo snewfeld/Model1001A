@@ -1,0 +1,50 @@
+/*
+remote-control-1-LED
+This was written to test the IR Remote Keypad driving 
+all it does is turn on/off/blink an LED on Arduino pin D2 in response to
+a key press on the IR Remote.
+The keypad codes are documented here:
+http://www.zebrasystems.com/ny/iot-dev-kit-4j/model-1001a/ir-remote-keypad
+The key used in the sketch 
+
+*/
+#include <Adafruit_NeoPixel.h>
+    #include <IRLib.h>
+     
+    IRrecv My_Receiver(7);//receiver on pin 7
+    IRdecode My_Decoder;//Decoder object
+     
+    //led  pin 2
+     
+    void setup() {
+    // initialize digital pin 13 as an output.
+    pinMode(2, OUTPUT);
+      My_Receiver.enableIRIn(); // Start the receiver
+    }
+     
+    void loop() {
+      if (My_Receiver.GetResults(&My_Decoder)) {
+        My_Decoder.decode();
+        if (My_Decoder.decode_type== NEC) {
+          switch(My_Decoder.value) {
+            case 0xf700ff:  //(upper-left-most key, row 1, col 1) BLINK 2 times
+  digitalWrite(2, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);              // wait for a second
+  digitalWrite(2, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);              // wait for a second
+  digitalWrite(2, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);              // wait for a second
+  digitalWrite(2, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);              // wait for a second
+              break;
+            case 0xf7807f:  //(row 1, col 2 key) LED ON SOLID
+  digitalWrite(2, LOW);    // turn the LED off by making the voltage LOW
+              break;
+            case 0xf740bf:  //(row 1, col 3 key) LED OFF
+  digitalWrite(2, HIGH);    // turn the LED off by making the voltage LOW
+              break;
+          }
+        My_Receiver.resume(); //Restart the receiver
+        }
+      }
+    }
