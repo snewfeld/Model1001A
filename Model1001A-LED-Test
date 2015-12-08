@@ -1,0 +1,125 @@
+/*
+4x5-LED-Driver for Model 1001A Test
+*/
+// NeoPixel Ring simple sketch (c) 2013 Shae Erisson
+// released under the GPLv3 license to match the rest of the AdaFruit NeoPixel library
+
+#include <Adafruit_NeoPixel.h>
+#include <avr/power.h>
+
+// Which pin on the Arduino is connected to the NeoPixels?
+// On a Trinket or Gemma we suggest changing this to 1
+#define PIN            6
+
+// How many NeoPixels are attached to the Arduino?
+#define NUMPIXELS      25
+
+// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
+// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
+// example for more information on possible values.
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+int delayval = 550; // delay for half a second
+
+void setup() {
+  // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
+#if defined (__AVR_ATtiny85__)
+  if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
+#endif
+  // End of trinket special code
+
+  pixels.begin(); // This initializes the NeoPixel library.
+}
+
+void loop() {
+
+  // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
+
+  // point north-west
+  // segment 1
+  for(int i=0;i<5;i++){
+    pixels.setPixelColor(i, pixels.Color(0,49,00));
+  }
+  // segment 2 
+  for(int i=5;i<10;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  }  
+  // segment 3
+  for(int i=10;i<15;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  }
+  // segment 4 
+  for(int i=15;i<20;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  }   
+  // 5 extra LEDS
+  for(int i=20;i<25;i++){
+    pixels.setPixelColor(i, pixels.Color(0,0,0));
+  } 
+  pixels.show(); // This sends the updated pixel color to the hardware.
+    delay(delayval); // Delay for a period of time (in milliseconds).
+
+  // point north-east
+  for(int i=0;i<5;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  }
+  for(int i=5;i<10;i++){
+    pixels.setPixelColor(i, pixels.Color(30,30,0));
+  }  
+  for(int i=10;i<15;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  }
+  for(int i=15;i<20;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  }
+  for(int i=20;i<25;i++){
+    pixels.setPixelColor(i, pixels.Color(0,0,0));
+  }  
+    pixels.show(); // This sends the updated pixel color to the hardware.
+    delay(delayval); // Delay for a period of time (in milliseconds).
+
+  // point south-east
+  // segment 1
+  for(int i=0;i<5;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  }
+  // segment 2 
+  for(int i=5;i<10;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  }  
+  // segment 3
+  for(int i=10;i<15;i++){
+    pixels.setPixelColor(i, pixels.Color(50,0,0));
+  }
+  // segment 4 
+  for(int i=15;i<20;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  } 
+  for(int i=20;i<25;i++){
+    pixels.setPixelColor(i, pixels.Color(0,0,0));
+  }  
+    pixels.show(); // This sends the updated pixel color to the hardware.
+    delay(delayval); // Delay for a period of time (in milliseconds).
+
+  // point south-west
+  for(int i=0;i<5;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  }
+  for(int i=5;i<10;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  }  
+  for(int i=10;i<15;i++){
+    pixels.setPixelColor(i, pixels.Color(20,20,20));
+  }
+  for(int i=15;i<20;i++){
+    pixels.setPixelColor(i, pixels.Color(0,0,25));
+  }
+  for(int i=20;i<25;i++){
+    pixels.setPixelColor(i, pixels.Color(0,0,0));
+  }  
+    pixels.show(); // This sends the updated pixel color to the hardware.
+    delay(delayval); // Delay for a period of time (in milliseconds).
+
+  
+
+}
